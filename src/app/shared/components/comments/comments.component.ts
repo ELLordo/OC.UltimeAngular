@@ -1,13 +1,22 @@
 import { Component, Input, OnInit,Output , EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Comment } from 'src/app/core/models/comment.model';
-import { trigger, state, style, transition, animate, query, group, sequence } from '@angular/animations';
+import { trigger, state, style, transition, animate, query, group, sequence, stagger, animateChild } from '@angular/animations';
 
 @Component({
   selector: 'app-comments',
   templateUrl: './comments.component.html',
   styleUrls: ['./comments.component.scss'],
   animations: [
+    trigger('list' ,[
+      transition(':enter',[
+        query('@listItem', [
+          stagger(50, [
+            animateChild()
+          ])
+        ])
+      ])
+    ]),
     trigger('listItem', [
   state('default', style({
     transform: 'scale(1)',
@@ -43,14 +52,14 @@ import { trigger, state, style, transition, animate, query, group, sequence } fr
     })),
 
     group([
-      // sequence([
-      //   animate('250ms', style({
-      //     'background-color': 'rgb(255,7,147)'
-      //   })),
-      //   animate('250ms',style({
-      //     'background-color': 'white'
-      //   }))
-      // ]),
+      sequence([
+        animate('250ms', style({
+          'background-color': 'rgb(201, 157, 242)'
+        })),
+        animate('250ms',style({
+          'background-color': 'white'
+        }))
+      ]),
       
       query('.comment-text', [
       animate('250ms', style({
