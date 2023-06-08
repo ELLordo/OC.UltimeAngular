@@ -4,10 +4,12 @@ import { CommentsComponent } from './components/comments/comments.component'
 import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ShortenPipe } from './pipes/shorten.pipe';
+import { NamePipe } from './pipes/userName.pipe';
 @NgModule({
   declarations: [
     CommentsComponent,
-    ShortenPipe
+    ShortenPipe,
+    NamePipe
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { ShortenPipe } from './pipes/shorten.pipe';
     CommentsComponent,
     MaterialModule,
     ReactiveFormsModule,
-    ShortenPipe
+    ShortenPipe,
+    NamePipe
   ]
 })
 export class SharedModule { }
