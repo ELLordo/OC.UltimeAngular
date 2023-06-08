@@ -1,7 +1,9 @@
 import { Component, Input, OnInit,Output , EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Comment } from 'src/app/core/models/comment.model';
-import { trigger, state, style, transition, animate, query, group, sequence, stagger, animateChild } from '@angular/animations';
+import { trigger, state, style, transition, animate, query, group, sequence, stagger, animateChild, useAnimation } from '@angular/animations';
+import { flashAnimation } from '../../animations/flash.animation';
+import { slideAndFAdeAnimation } from '../../animations/slide-and-fade.animation';
 
 @Component({
   selector: 'app-comments',
@@ -40,26 +42,20 @@ import { trigger, state, style, transition, animate, query, group, sequence, sta
         opacity: 0
     })
 ]),
-    style({
-      transform: 'translateX(-100%)',
-      opacity: 0,
-      'background-color': 'rgb(201 ,157 ,242)',
+    useAnimation(slideAndFAdeAnimation, {
+      params:{
+        time:'800ms',
+        startColor:'blue'
+      }
     }),
-    animate('250ms ease-out', style({
-      transform: 'translateX(0)',
-      opacity:1,
-      'background-color': 'white',
-    })),
 
     group([
-      sequence([
-        animate('250ms', style({
-          'background-color': 'rgb(201, 157, 242)'
-        })),
-        animate('250ms',style({
-          'background-color': 'white'
-        }))
-      ]),
+      useAnimation(flashAnimation, {
+        params:{
+          time:'1000ms',
+          flashColor: 'orange'
+        }
+      }),
       
       query('.comment-text', [
       animate('250ms', style({
