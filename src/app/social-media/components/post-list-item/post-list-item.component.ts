@@ -17,4 +17,7 @@ export class PostListItemComponent implements OnInit {
   }
 
 
+  onNewComment(comment: string){
+    console.log(comment);
+  }
 }
