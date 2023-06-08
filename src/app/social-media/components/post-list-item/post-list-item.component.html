@@ -1,4 +1,5 @@
 <mat-card class="mat-card">
+    
 <mat-card-header>
     <mat-card-title>
         <span>{{ post.title | titlecase }}</span>
@@ -7,6 +8,7 @@
         <span>{{ post.createdDate | date}}</span>
     </mat-card-subtitle>
 </mat-card-header>
+
 <mat-card-content>
     <img mat-card-image *ngIf="post.imageUrl as imageUrl" [src]="imageUrl" [alt]="post.title">
     <span class="post-content">{{ post.content }}</span>
