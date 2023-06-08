@@ -5,7 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import * as fr from '@angular/common/locales/fr'
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,8 @@ import * as fr from '@angular/common/locales/fr'
     CommonModule,
     SharedModule,
     RouterModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   exports: [
     HeaderComponent
