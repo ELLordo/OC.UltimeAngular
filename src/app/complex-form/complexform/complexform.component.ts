@@ -14,10 +14,14 @@ constructor(private formBuilder: FormBuilder) { }
 
 
 ngOnInit(): void {
-  
+ this.initMainForm();
 }
 
 initMainForm(): void {
   this.mainForm = this.formBuilder.group({});
+}
+
+onSubmitForm(): void {
+  
 }
 }
