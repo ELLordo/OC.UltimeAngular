@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Observable } from 'rxjs/internal/Observable';
 import { map, startWith, tap } from 'rxjs/operators';
 import { ComplexFormService } from '../services/complex-form.service';
+import { validValidator } from '../validators/valid.validator';
 
 @Component({
   selector: 'app-complexform',
@@ -86,7 +87,7 @@ private initFormObservables() {
   private setEmailValidator(showEmailCtrl: boolean){
 {
         if(showEmailCtrl){
-          this.emailCtrl.addValidators([Validators.required, Validators.email]);
+          this.emailCtrl.addValidators([Validators.required, Validators.email, validValidator()]);
           this.confirmEmailCtrl.addValidators([Validators.required, Validators.email]);
         } else {
           this.emailCtrl.clearValidators();
@@ -136,7 +137,9 @@ getFormCtrlErrorText(ctrl: AbstractControl){
     return 'Ce numero contient pas assez de chiffres';
   } else if (ctrl.hasError('maxlength')) {
     return 'Ce numero contient trop de chiffres';
-  }  else {
+  } else if (ctrl.hasError('validValidator')) {
+ return ' Cette adresse ne contient pas le mot VALID '
+  } else {
     return 'Ce champ contient une erreur';
   }
 }
