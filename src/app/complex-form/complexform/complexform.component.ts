@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-complexform',
@@ -31,7 +31,7 @@ constructor(private formBuilder: FormBuilder) { }
 ngOnInit(): void {
   this.initFormControls();
   this.initMainForm();
-  this.initFormObservable();
+  this.initFormObservables();
 }
 
 
@@ -67,19 +67,59 @@ private initMainForm(): void {
 });
 } 
 
-  initFormObservable() {
+private initFormObservables() {
     this.showEmailCtrl$ = this.contactPreferenceCtrl.valueChanges.pipe(
-      startWith(this.contactPreferenceCtrl.value),
-      map(preference => preference === 'email'),
-      
+        startWith(this.contactPreferenceCtrl.value),
+        map(preference => preference === 'email'),
+        tap(showEmailCtrl => this.setEmailValidator(showEmailCtrl))
     );
     this.showPhoneCtrl$ = this.contactPreferenceCtrl.valueChanges.pipe(
-      startWith(this.contactPreferenceCtrl.value),
-      map(preference => preference === 'phone')
-    )
+        startWith(this.contactPreferenceCtrl.value),
+        map(preference => preference === 'phone'),
+        tap(showPhoneCtrl => this.setPhoneValidator(showPhoneCtrl))
+    );
+}
+
+  private setEmailValidator(showEmailCtrl: boolean){
+{
+        if(showEmailCtrl){
+          this.emailCtrl.addValidators([Validators.required, Validators.email]);
+          this.confirmEmailCtrl.addValidators([Validators.required, Validators.email]);
+        } else {
+          this.emailCtrl.clearValidators();
+          this.confirmEmailCtrl.clearValidators();
+        }
+        this.emailCtrl.updateValueAndValidity();
+        this.confirmEmailCtrl.updateValueAndValidity()
+      }
+  }
+
+  private setPhoneValidator(showPhoneCtrl: boolean){
+    {
+        if(showPhoneCtrl){
+          this.phoneCtrl.addValidators([Validators.required, Validators.minLength(10), Validators.maxLength(10)]);
+        } else {
+          this.phoneCtrl.clearValidators();
+        }
+        this.phoneCtrl.updateValueAndValidity();
+      }
   }
 
 onSubmitForm(): void {
 console.log(this.mainForm.value)
+}
+
+getFormCtrlErrorText(ctrl: AbstractControl){
+  if (ctrl.hasError('required')){
+    return 'Ce champ est requis';
+  } else if (ctrl.hasError('email')) {
+    return 'Merci de rentrer une adresse mail valide';
+  } else if (ctrl.hasError('minlength')) {
+    return 'Ce numero contient pas assez de chiffres';
+  } else if (ctrl.hasError('maxlength')) {
+    return 'Ce numero contient trop de chiffres';
+  }  else {
+    return 'Ce champ contient une erreur';
+  }
 }
 }
