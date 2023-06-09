@@ -30,9 +30,16 @@ private initObservables() {
     );
 }
 
-onHire() {
-
+  onHire() {
+    this.candidate$.pipe(
+        take(1),
+        tap(candidate => {
+            this.candidatesService.hireCandidate(candidate.id);
+            this.onGoBack();
+        })
+    ).subscribe();
 }
+
 
 onRefuse() {
     this.candidate$.pipe(
