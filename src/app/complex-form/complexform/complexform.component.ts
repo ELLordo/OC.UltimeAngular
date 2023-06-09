@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { map, startWith, tap } from 'rxjs/operators';
 import { ComplexFormService } from '../services/complex-form.service';
 import { validValidator } from '../validators/valid.validator';
+import { confirmEqualValidator } from '../validators/confirm-egual.validator';
 
 @Component({
   selector: 'app-complexform',
@@ -60,6 +61,8 @@ private initMainForm(): void {
     this.emailForm = this.formBuilder.group({
         email: this.emailCtrl,
         confirm: this.confirmEmailCtrl
+}, {
+  validators: [confirmEqualValidator('email', 'confirm')]
 });
     this.phoneCtrl = this.formBuilder.control('');
     this.passwordCtrl = this.formBuilder.control('', Validators.required);
@@ -68,6 +71,8 @@ private initMainForm(): void {
     username: ['', Validators.required],
     password: this.passwordCtrl,
     confirmPassword: this.confirmPasswordCtrl
+}, {
+  validators:[confirmEqualValidator('password','confirmPassword')]
 });
 } 
 
@@ -87,7 +92,7 @@ private initFormObservables() {
   private setEmailValidator(showEmailCtrl: boolean){
 {
         if(showEmailCtrl){
-          this.emailCtrl.addValidators([Validators.required, Validators.email, validValidator()]);
+          this.emailCtrl.addValidators([Validators.required, Validators.email]);
           this.confirmEmailCtrl.addValidators([Validators.required, Validators.email]);
         } else {
           this.emailCtrl.clearValidators();
@@ -137,8 +142,6 @@ getFormCtrlErrorText(ctrl: AbstractControl){
     return 'Ce numero contient pas assez de chiffres';
   } else if (ctrl.hasError('maxlength')) {
     return 'Ce numero contient trop de chiffres';
-  } else if (ctrl.hasError('validValidator')) {
- return ' Cette adresse ne contient pas le mot VALID '
   } else {
     return 'Ce champ contient une erreur';
   }

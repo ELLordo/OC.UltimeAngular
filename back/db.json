@@ -210,6 +210,24 @@
         "confirmPassword": "dwq"
       },
       "id": 5
+    },
+    {
+      "personalInfo": {
+        "firstName": "dwdw",
+        "lastName": "dwdw"
+      },
+      "contactPreference": "phone",
+      "email": {
+        "email": "",
+        "confirm": ""
+      },
+      "phone": "0123456789",
+      "loginInfo": {
+        "username": "dwdw",
+        "password": "  ",
+        "confirmPassword": "   "
+      },
+      "id": 6
     }
   ],
   "candidates": [
