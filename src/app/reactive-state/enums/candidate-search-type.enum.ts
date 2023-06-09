@@ -1,5 +1,5 @@
 export enum CandidateSearchType {
-    LASTNAME = 'lastname',
-    FIRSTNAME = 'firstname',
+    LASTNAME = 'lastName',
+    FIRSTNAME = 'firstName',
     COMPANY = 'company'
 }
