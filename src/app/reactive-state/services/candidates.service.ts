@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, delay, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, delay, map, switchMap, take, tap } from 'rxjs';
 import { Candidate } from '../models/candidate.model';
 import { environment } from 'src/environments/environments';
 import { HttpClient } from '@angular/common/http';
@@ -49,4 +49,17 @@ export class CandidatesService {
         map(candidates => candidates.filter(candidate => candidate.id === id)[0])
     );
 }
+  refuseCandidate(id: number): void {
+    this.setLoadingStatus(true);
+    this.http.delete(`${environment.apiUrl}/candidates/${id}`).pipe(
+      delay(1000),
+      switchMap(() => this.candidates$),
+      take(1),
+      map(candidates => candidates.filter(candidate => candidate.id !== id)),
+      tap(candidates => {
+        this._candidates$.next(candidates);
+        this.setLoadingStatus(false);
+      })
+    ).subscribe();
+  }
 }
