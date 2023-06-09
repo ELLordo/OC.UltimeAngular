@@ -119,7 +119,6 @@
       "content": "The way I see it, every life is a pile of good things and bad things.…hey.…the good things don't always soften the bad things; but vice-versa the bad things don't necessarily spoil the good things and make them unimportant.\n\nAw, you're all Mr. Grumpy Face today. You hit me with a cricket bat. I'm nobody's taxi service; I'm not gonna be there to catch you every time you feel like jumping out of a spaceship. You hate me; you want to kill me! Well, go on! Kill me! KILL ME!\n\nIt's art! A statement on modern society, 'Oh Ain't Modern Society Awful?'! No… It's a thing; it's like a plan, but with more greatness. Stop talking, brain thinking. Hush. Saving the world with meals on wheels.",
       "comments": []
     }
-    
   ],
   "users": [
     {
@@ -193,6 +192,24 @@
         "confirmPassword": "moihsdgf"
       },
       "id": 4
+    },
+    {
+      "personalInfo": {
+        "firstName": "dwq",
+        "lastName": "dwq"
+      },
+      "contactPreference": "phone",
+      "email": {
+        "email": "",
+        "confirm": ""
+      },
+      "phone": "0123456789",
+      "loginInfo": {
+        "username": "dwq",
+        "password": "dwq",
+        "confirmPassword": "dwq"
+      },
+      "id": 5
     }
   ],
   "candidates": [

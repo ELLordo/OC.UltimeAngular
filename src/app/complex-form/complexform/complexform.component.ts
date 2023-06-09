@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { map, startWith, tap } from 'rxjs/operators';
+import { ComplexFormService } from '../services/complex-form.service';
 
 @Component({
   selector: 'app-complexform',
@@ -10,6 +11,7 @@ import { map, startWith, tap } from 'rxjs/operators';
 })
 export class ComplexformComponent implements OnInit {
 
+  loading = false;
 mainForm!: FormGroup;
 personalInfoForm!: FormGroup;
 contactPreferenceCtrl!: FormControl;
@@ -25,7 +27,8 @@ showEmailCtrl$!: Observable<boolean>;
 showPhoneCtrl$!: Observable<boolean>;
 
 
-constructor(private formBuilder: FormBuilder) { }
+constructor(private formBuilder: FormBuilder,
+    private complexFormSerice: ComplexFormService) { }
 
 
 ngOnInit(): void {
@@ -106,7 +109,22 @@ private initFormObservables() {
   }
 
 onSubmitForm(): void {
-console.log(this.mainForm.value)
+  this.loading =true;
+  this.complexFormSerice.saveUserInfo(this.mainForm.value).pipe(
+    tap(saved => {
+      this.loading =false;
+      if(saved){
+       this.resetForm()
+      } else {
+        console.log('Echec de signature')
+      }
+    })
+  ).subscribe();
+}
+
+private resetForm() {
+   this.mainForm.reset();
+   this.contactPreferenceCtrl.patchValue('email');
 }
 
 getFormCtrlErrorText(ctrl: AbstractControl){
