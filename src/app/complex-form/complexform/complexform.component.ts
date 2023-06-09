@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs/internal/Observable';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-complexform',
@@ -19,13 +21,19 @@ passwordCtrl!: FormControl;
 confirmPasswordCtrl!: FormControl;
 loginInfoForm!: FormGroup;
 
+showEmailCtrl$!: Observable<boolean>;
+showPhoneCtrl$!: Observable<boolean>;
+
+
 constructor(private formBuilder: FormBuilder) { }
 
 
 ngOnInit(): void {
   this.initFormControls();
   this.initMainForm();
+  this.initFormObservable();
 }
+
 
 private initMainForm(): void {
     this.mainForm = this.formBuilder.group({
@@ -58,6 +66,18 @@ private initMainForm(): void {
     confirmPassword: this.confirmPasswordCtrl
 });
 } 
+
+  initFormObservable() {
+    this.showEmailCtrl$ = this.contactPreferenceCtrl.valueChanges.pipe(
+      startWith(this.contactPreferenceCtrl.value),
+      map(preference => preference === 'email'),
+      
+    );
+    this.showPhoneCtrl$ = this.contactPreferenceCtrl.valueChanges.pipe(
+      startWith(this.contactPreferenceCtrl.value),
+      map(preference => preference === 'phone')
+    )
+  }
 
 onSubmitForm(): void {
 console.log(this.mainForm.value)
