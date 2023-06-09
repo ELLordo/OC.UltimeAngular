@@ -1,0 +1,18 @@
+mat-card {
+  text-align: center;
+}
+
+img {
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    display: flex;
+    margin-left: 35%;
+}
+
+button {
+  margin: 5px;
+}
+.mdc-card__actions{
+  justify-content: center;
+}
